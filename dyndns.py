@@ -8,6 +8,8 @@
 
 from inwx import domrobot, prettyprint, getOTP
 from configuration import get_account_data
+import requests
+
 #import pycurl
 
 def main():
@@ -22,8 +24,15 @@ def main():
         loginRet = inwx_conn.account.unlock({'tan': getOTP(shared_secret)})
 
     domain = "tonihds.de"
+    ip = requests.get('https://api.ipify.org').text
+    print(ip)
     checkRet = inwx_conn.domain.check({'domain': domain})
-    print((prettyprint.domain_check(checkRet)))
+    nameserv_info = inwx_conn.nameserver.info({'domain':domain})
+    print(nameserv_info)
+    inwx_conn.nameserver.updateRecord({'id': '289183459',
+                                        'type': 'A',
+                                        'content': ip })
+    print(prettyprint.domain_check(checkRet))
 
 if __name__ == '__main__':
     main()

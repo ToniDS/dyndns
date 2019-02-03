@@ -8,7 +8,7 @@
 
 from inwx import domrobot, prettyprint, getOTP
 from configuration import get_account_data
-#import pycurl
+import pycurl
 
 def main():
     api_url, username, password, shared_secret = get_account_data(True, config_section="live")
@@ -23,7 +23,7 @@ def main():
 
     domain = "tonihds.de"
     checkRet = inwx_conn.domain.check({'domain': domain})
-    print((prettyprint.domain_check(checkRet)))
+    print(prettyprint.domain_check(checkRet))
 
 if __name__ == '__main__':
     main()
